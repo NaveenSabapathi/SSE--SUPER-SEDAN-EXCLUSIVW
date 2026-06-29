@@ -1,11 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import BottomNav from "@/components/BottomNav";
 import FloatingActions from "@/components/FloatingActions";
 import "./globals.css";
 
 const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -37,10 +42,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background text-textMain antialiased">
       <body
-        className={`${inter.className} min-h-screen flex flex-col bg-background text-textMain`}
+        className={`${inter.className} ${spaceGrotesk.className} min-h-screen flex flex-col bg-background text-textMain`}
       >
+        {/* Showroom Spotlight Glow */}
+        <div
+          className="fixed top-0 left-1/2 -translate-x-1/2 -z-10 pointer-events-none w-[800px] h-[500px] bg-accentBlue/10 rounded-full blur-[120px]"
+          aria-hidden="true"
+        />
+
         {/* Simple Global Executive Header */}
-        <header className="border-b border-borderMuted bg-background/80 backdrop-blur-md sticky top-0 z-50">
+        <header className="border-b border-borderMuted/50 bg-background/60 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <span className="font-bold tracking-wider text-xl text-textMain">
@@ -65,7 +76,7 @@ export default function RootLayout({
               </Link>
               <Link
                 href="/appraisal"
-                className="bg-accentBlue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition shadow-lg shadow-blue-500/10 touch-target flex items-center"
+                className="bg-accentBlue/20 border border-accentBlue/30 backdrop-blur-sm text-white px-4 py-2 rounded-full hover:bg-accentBlue/30 transition touch-target flex items-center"
               >
                 Check Value
               </Link>
