@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import { Inter } from "next/font/google";
+import BottomNav from "@/components/BottomNav";
+import FloatingActions from "@/components/FloatingActions";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,9 +11,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SSE | Super Sedan Exclusive - Premium Used Sedans",
+  title: "SSE - Super Sedan Exclusive | Premium Used Sedans in South India",
   description:
-    "South India's premier online platform for buying, selling, and evaluating used luxury and executive sedans. Get accurate market appraisals instantly.",
+    "Buy, sell, and evaluate premium pre-owned sedans. Transparent market appraisals, flood-free guarantees, and expert brokerage at ssecars.in.",
+  openGraph: {
+    title: "SSE - Super Sedan Exclusive",
+    url: "https://ssecars.in",
+    siteName: "SSE Cars",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
@@ -33,35 +42,48 @@ export default function RootLayout({
         {/* Simple Global Executive Header */}
         <header className="border-b border-borderMuted bg-background/80 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <span className="font-bold tracking-wider text-xl text-textMain">
                 S<span className="text-accentBlue">S</span>E
               </span>
               <span className="text-[10px] bg-accentGold/10 text-accentGold border border-accentGold/20 px-2 py-0.5 rounded font-medium uppercase tracking-widest hidden sm:inline">
                 Sedan Exclusive
               </span>
-            </div>
+            </Link>
             <nav className="flex items-center gap-6 text-sm font-medium text-textMuted">
-              <a
-                href="#features"
+              <Link
+                href="/inventory"
                 className="hover:text-textMain transition touch-target flex items-center"
               >
-                Why Sedans
-              </a>
-              <a
+                Inventory
+              </Link>
+              <Link
+                href="/expertise"
+                className="hover:text-textMain transition touch-target flex items-center"
+              >
+                Expertise
+              </Link>
+              <Link
                 href="/appraisal"
                 className="bg-accentBlue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition shadow-lg shadow-blue-500/10 touch-target flex items-center"
               >
                 Check Value
-              </a>
+              </Link>
             </nav>
           </div>
         </header>
 
-        <main className="flex-grow">{children}</main>
+        {/* Main content with bottom padding for mobile nav */}
+        <main className="flex-grow pb-20 md:pb-0">{children}</main>
 
-        {/* Minimalist Footer */}
-        <footer className="border-t border-borderMuted bg-background py-6 text-center text-xs text-textMuted">
+        {/* Mobile Bottom Navigation */}
+        <BottomNav />
+
+        {/* Floating WhatsApp Button (Mobile only) */}
+        <FloatingActions />
+
+        {/* Minimalist Footer - hidden on mobile when bottom nav is visible */}
+        <footer className="border-t border-borderMuted bg-background py-6 text-center text-xs text-textMuted md:block hidden">
           <p>
             © {new Date().getFullYear()} Super Sedan Exclusive. All Rights
             Reserved. Built for South India.
