@@ -1,115 +1,75 @@
 @import "tailwindcss";
 
-/* Premium Dark Theme - SSE (Super Sedan Exclusive) */
 @theme {
-  /* Primary Colors */
-  --color-slate-900: #0F172A;
-  --color-slate-800: #1E293B;
-  --color-slate-700: #334155;
-  --color-slate-600: #475569;
-  --color-slate-400: #94A3B8;
-  --color-slate-300: #CBD5E1;
-  --color-slate-100: #F1F5F9;
-
-  /* Accent Colors - Gold */
-  --color-gold-500: #D4AF37;
-  --color-gold-400: #E5C158;
-  --color-gold-300: #F0D578;
-
-  /* Accent Colors - Blue */
-  --color-accent-blue: #3B82F6;
-  --color-accent-blue-light: #60A5FA;
-
-  /* Typography */
-  --font-sans: "Inter", "Manrope", ui-sans-serif, system-ui, sans-serif;
-
-  /* Custom colors for components */
-  --color-bg-primary: #0F172A;
-  --color-bg-card: #1E293B;
-  --color-bg-card-hover: #283548;
-  --color-border-subtle: rgba(148, 163, 184, 0.1);
-  --color-border-accent: rgba(212, 175, 55, 0.3);
+  /* Premium Color Tokens */
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-borderMuted: #334155;
+  --color-accentBlue: #3B82F6;
+  --color-accentGold: #EAB308;
+  --color-textMain: #F8FAFC;
+  --color-textMuted: #94A3B8;
 }
 
-/* Base Styles */
-html {
-  scroll-behavior: smooth;
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-textMain);
+  }
 }
 
-body {
-  background-color: #0F172A;
-  color: #F1F5F9;
-  font-family: "Inter", "Manrope", ui-sans-serif, system-ui, sans-serif;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  .btn-primary {
+    background-color: var(--color-accentBlue);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.1);
+  }
+
+  .btn-primary:hover {
+    background-color: #2563eb;
+  }
+
+  .btn-secondary {
+    background-color: var(--color-surface);
+    color: var(--color-textMain);
+    border: 1px solid var(--color-borderMuted);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-borderMuted);
+  }
+
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-borderMuted);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.2s;
+  }
+
+  .card:hover {
+    border-color: color-mix(in srgb, var(--color-accentGold) 30%, transparent);
+  }
 }
 
-/* Touch Target Helper - Minimum 48px */
-.touch-target {
-  min-height: 48px;
-  min-width: 48px;
-}
-
-/* Card Component Styles */
-.card {
-  background-color: #1E293B;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  border-radius: 0.75rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.card:hover {
-  background-color: #283548;
-  border-color: rgba(212, 175, 55, 0.3);
-}
-
-/* Button Styles */
-.btn-primary {
-  background-color: #D4AF37;
-  color: #0F172A;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  min-height: 48px;
-  transition: all 0.2s ease-in-out;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-primary:hover {
-  background-color: #E5C158;
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background-color: #1E293B;
-  color: #F1F5F9;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  min-height: 48px;
-  transition: all 0.2s ease-in-out;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-secondary:hover {
-  background-color: #283548;
-  border-color: rgba(212, 175, 55, 0.3);
-}
-
-/* Focus States for Accessibility */
-*:focus-visible {
-  outline: 2px solid #D4AF37;
-  outline-offset: 2px;
-}
-
-/* Selection Color */
-::selection {
-  background-color: rgba(212, 175, 55, 0.3);
-  color: #F1F5F9;
+@layer utilities {
+  .touch-target {
+    min-height: 3rem;
+    min-width: 3rem;
+  }
 }

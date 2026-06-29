@@ -1,237 +1,73 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "SSE - Super Sedan Exclusive | Premium Pre-Owned Sedans",
+  title: "SSE | Super Sedan Exclusive - Premium Used Sedans",
   description:
-    "Discover exclusive pre-owned luxury sedans in South India. Premium cars curated for discerning buyers, featuring concierge-level service.",
-  keywords: [
-    "premium cars",
-    "luxury sedans",
-    "pre-owned vehicles",
-    "South India cars",
-    "exclusive automobiles",
-  ],
-  authors: [{ name: "SSE - Super Sedan Exclusive" }],
-  openGraph: {
-    title: "SSE - Super Sedan Exclusive",
-    description: "Premium pre-owned sedans for the discerning buyer",
-    type: "website",
-    locale: "en_IN",
-  },
+    "South India's premier online platform for buying, selling, and evaluating used luxury and executive sedans. Get accurate market appraisals instantly.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#0F172A",
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
-      <body className="min-h-screen bg-slate-900 text-slate-100 antialiased">
-        {/* Header */}
-        <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center justify-between h-16 sm:h-20">
-              {/* Logo */}
-              <div className="flex items-center">
-                <a href="/" className="flex items-center gap-2 touch-target">
-                  <span className="text-xl sm:text-2xl font-bold tracking-tight">
-                    <span className="text-gold-500">SSE</span>
-                    <span className="text-slate-300 ml-1">
-                      Super Sedan Exclusive
-                    </span>
-                  </span>
-                </a>
-              </div>
-
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-8">
-                <NavLink href="/browse">Browse Sedans</NavLink>
-                <NavLink href="/sell">Sell Your Car</NavLink>
-                <NavLink href="/about">About</NavLink>
-                <NavLink href="/contact">Contact</NavLink>
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden p-3 touch-target flex items-center justify-center rounded-lg hover:bg-slate-800 transition-colors"
-                aria-label="Open menu"
+    <html lang="en" className="bg-background text-textMain antialiased">
+      <body
+        className={`${inter.className} min-h-screen flex flex-col bg-background text-textMain`}
+      >
+        {/* Simple Global Executive Header */}
+        <header className="border-b border-borderMuted bg-background/80 backdrop-blur-md sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="font-bold tracking-wider text-xl text-textMain">
+                S<span className="text-accentBlue">S</span>E
+              </span>
+              <span className="text-[10px] bg-accentGold/10 text-accentGold border border-accentGold/20 px-2 py-0.5 rounded font-medium uppercase tracking-widest hidden sm:inline">
+                Sedan Exclusive
+              </span>
+            </div>
+            <nav className="flex items-center gap-6 text-sm font-medium text-textMuted">
+              <a
+                href="#features"
+                className="hover:text-textMain transition touch-target flex items-center"
               >
-                <svg
-                  className="w-6 h-6 text-slate-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
+                Why Sedans
+              </a>
+              <a
+                href="/appraisal"
+                className="bg-accentBlue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition shadow-lg shadow-blue-500/10 touch-target flex items-center"
+              >
+                Check Value
+              </a>
             </nav>
           </div>
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-grow">{children}</main>
 
-        {/* Footer */}
-        <footer className="bg-slate-900 border-t border-slate-800 mt-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {/* Brand Column */}
-              <div className="sm:col-span-2 lg:col-span-1">
-                <div className="text-lg font-bold mb-4">
-                  <span className="text-gold-500">SSE</span>
-                  <span className="text-slate-400 ml-1">
-                    Super Sedan Exclusive
-                  </span>
-                </div>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Premium pre-owned sedans curated for the discerning South
-                  Indian buyer.
-                </p>
-              </div>
-
-              {/* Quick Links */}
-              <div>
-                <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-4">
-                  Quick Links
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <FooterLink href="/browse">Browse Inventory</FooterLink>
-                  </li>
-                  <li>
-                    <FooterLink href="/sell">Sell Your Car</FooterLink>
-                  </li>
-                  <li>
-                    <FooterLink href="/financing">Financing</FooterLink>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Support */}
-              <div>
-                <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-4">
-                  Support
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <FooterLink href="/faq">FAQ</FooterLink>
-                  </li>
-                  <li>
-                    <FooterLink href="/contact">Contact Us</FooterLink>
-                  </li>
-                  <li>
-                    <FooterLink href="/warranty">Warranty</FooterLink>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Contact */}
-              <div>
-                <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-4">
-                  Contact
-                </h3>
-                <ul className="space-y-3 text-sm text-slate-400">
-                  <li className="flex items-start gap-2">
-                    <span>📞</span>
-                    <span>+91 98765 43210</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span>✉️</span>
-                    <span>concierge@sse.in</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span>📍</span>
-                    <span>Chennai, Tamil Nadu</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Bottom Bar */}
-            <div className="mt-8 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-slate-500">
-                © 2026 SSE. Premium rights reserved.
-              </p>
-              <div className="flex gap-6 text-sm text-slate-500">
-                <a
-                  href="/privacy"
-                  className="hover:text-slate-300 transition-colors touch-target"
-                >
-                  Privacy
-                </a>
-                <a
-                  href="/terms"
-                  className="hover:text-slate-300 transition-colors touch-target"
-                >
-                  Terms
-                </a>
-              </div>
-            </div>
-          </div>
+        {/* Minimalist Footer */}
+        <footer className="border-t border-borderMuted bg-background py-6 text-center text-xs text-textMuted">
+          <p>
+            © {new Date().getFullYear()} Super Sedan Exclusive. All Rights
+            Reserved. Built for South India.
+          </p>
         </footer>
       </body>
     </html>
-  );
-}
-
-function NavLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      className="text-sm sm:text-base font-medium text-slate-300 hover:text-gold-500 transition-colors touch-target flex items-center px-2"
-    >
-      {children}
-    </a>
-  );
-}
-
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      className="text-sm text-slate-400 hover:text-gold-500 transition-colors touch-target inline-flex items-center"
-    >
-      {children}
-    </a>
   );
 }

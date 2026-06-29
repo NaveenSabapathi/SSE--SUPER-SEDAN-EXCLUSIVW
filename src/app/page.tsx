@@ -4,33 +4,33 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gold-500/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accentGold/10 via-transparent to-transparent" />
 
         {/* Decorative Elements */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent-blue/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accentGold/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accentBlue/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 mb-8">
-            <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
-            <span className="text-sm text-slate-300">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/50 border border-borderMuted mb-8">
+            <span className="w-2 h-2 rounded-full bg-accentGold animate-pulse" />
+            <span className="text-sm text-textMuted">
               Premium Pre-Owned Sedans in South India
             </span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span className="text-slate-100">Luxury Meets</span>
+            <span className="text-textMain">Luxury Meets</span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-gold-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accentGold/80 via-accentGold to-accentGold/80">
               Exclusivity
             </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-slate-400 mb-10 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-textMuted mb-10 leading-relaxed">
             Discover handpicked premium sedans curated for discerning buyers.
             Experience concierge-level service as you find your perfect vehicle.
           </p>
@@ -73,14 +73,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Section - Placeholder for future */}
-      <section className="py-16 sm:py-24 bg-slate-900">
+      {/* Featured Section */}
+      <section id="features" className="py-16 sm:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-textMain mb-4">
               Featured Sedans
             </h2>
-            <p className="text-slate-400">
+            <p className="text-textMuted">
               Handpicked vehicles ready for their next chapter.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function Home() {
           <div className="mt-12 text-center">
             <a
               href="/browse"
-              className="text-gold-500 hover:text-gold-400 font-medium touch-target inline-flex items-center px-4"
+              className="text-accentGold hover:text-accentGold/80 font-medium touch-target inline-flex items-center px-4"
             >
               View All Sedans
               <svg
@@ -129,14 +129,14 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 sm:py-24 bg-slate-800/50">
+      <section className="py-16 sm:py-24 bg-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">
-              The SSE Difference
+            <h2 className="text-2xl sm:text-3xl font-bold text-textMain mb-4">
+              Why Choose Sedans
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
-              We don't just sell cars. We curate experiences.
+            <p className="text-textMuted max-w-2xl mx-auto">
+              Discover the perfect blend of comfort, performance, and prestige.
             </p>
           </div>
 
@@ -176,12 +176,12 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
+      <section className="py-16 sm:py-24 bg-gradient-to-r from-background via-surface to-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-textMain mb-4">
             Ready to Find Your Perfect Sedan?
           </h2>
-          <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-textMuted mb-8 max-w-2xl mx-auto">
             Our concierge team is ready to assist you. Schedule a personalized
             consultation today.
           </p>
@@ -214,10 +214,10 @@ function TrustBadge({
 }) {
   return (
     <div className="text-center">
-      <div className="text-2xl sm:text-3xl font-bold text-gold-500 mb-1">
+      <div className="text-2xl sm:text-3xl font-bold text-accentGold mb-1">
         {value}
       </div>
-      <div className="text-sm text-slate-400">{label}</div>
+      <div className="text-sm text-textMuted">{label}</div>
     </div>
   );
 }
@@ -232,11 +232,11 @@ function PlaceholderCard({
   price: string;
 }) {
   return (
-    <div className="card p-6">
+    <div className="card">
       {/* Image Placeholder */}
-      <div className="aspect-[16/10] bg-slate-700/50 rounded-lg mb-4 flex items-center justify-center">
+      <div className="aspect-[16/10] bg-borderMuted/50 rounded-lg mb-4 flex items-center justify-center">
         <svg
-          className="w-12 h-12 text-slate-600"
+          className="w-12 h-12 text-textMuted/30"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -257,12 +257,12 @@ function PlaceholderCard({
       </div>
       <div className="space-y-2">
         <div className="flex justify-between items-start">
-          <h3 className="text-lg font-semibold text-slate-100">{title}</h3>
-          <span className="text-sm text-slate-400">{year}</span>
+          <h3 className="text-lg font-semibold text-textMain">{title}</h3>
+          <span className="text-sm text-textMuted">{year}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-gold-500 font-bold">{price}</span>
-          <button className="text-sm text-slate-400 hover:text-gold-500 transition-colors touch-target px-2">
+          <span className="text-accentGold font-bold">{price}</span>
+          <button className="text-sm text-textMuted hover:text-accentGold transition-colors touch-target px-2">
             View Details →
           </button>
         </div>
@@ -281,10 +281,10 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="card p-6 hover:scale-[1.02] transition-transform">
+    <div className="card hover:scale-[1.02] transition-transform">
       <div className="text-3xl mb-4">{icon}</div>
-      <h3 className="text-lg font-semibold text-slate-100 mb-2">{title}</h3>
-      <p className="text-sm text-slate-400 leading-relaxed">{description}</p>
+      <h3 className="text-lg font-semibold text-textMain mb-2">{title}</h3>
+      <p className="text-sm text-textMuted leading-relaxed">{description}</p>
     </div>
   );
 }
