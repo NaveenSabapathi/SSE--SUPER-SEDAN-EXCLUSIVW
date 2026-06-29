@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { Resend } from "resend";
 import path from "path";
-import { sendAppraisalNotification } from "@/lib/email";
+
+// Initialize Resend for email
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Initialize SQLite adapter with database path
 const dbPath = path.join(process.cwd(), "prisma", "dev.db");
@@ -97,20 +100,29 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send email notification (non-blocking)
-    sendAppraisalNotification({
-      make: body.make,
-      model: body.model,
-      year: body.year,
-      kilometers: body.kilometers,
-      rto: body.rto,
-      owners: body.owners,
-      phoneNumber: body.phoneNumber,
-      email: body.email,
-      priceRange: priceRange,
-    }).catch((error) => {
-      console.error("Email notification failed:", error);
-    });
+    // Send email notification via Resend (non-blocking)
+    try {
+      await resend.emails.send({
+        from: "SSE Appraisals <onboarding@resend.dev>",
+        to: process.env.RECEIVER_EMAIL || body.email,
+        subject: `New Lead: ${body.year} ${body.make} ${body.model}`,
+        html: `
+          <h2>New Appraisal Lead Captured</h2>
+          <p><strong>Vehicle:</strong> ${body.year} ${body.make} ${body.model}</p>
+          <p><strong>Kilometers:</strong> ${body.kilometers} km</p>
+          <p><strong>RTO:</strong> ${body.rto}</p>
+          <p><strong>Owners:</strong> ${body.owners}</p>
+          <hr />
+          <h3>Contact Info</h3>
+          <p><strong>Phone:</strong> ${body.phoneNumber}</p>
+          <p><strong>Email:</strong> ${body.email}</p>
+          <p><strong>Quoted Price Range:</strong> ${priceRange}</p>
+        `,
+      });
+      console.log("Resend email dispatched successfully.");
+    } catch (emailError) {
+      console.error("Resend API failed:", emailError);
+    }
 
     return NextResponse.json(
       {

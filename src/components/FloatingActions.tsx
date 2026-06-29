@@ -6,11 +6,17 @@ interface FloatingActionsProps {
 }
 
 export default function FloatingActions({
-  phoneNumber = "919876543210",
-  message = "Hi, I'm interested in your premium sedan services.",
+  phoneNumber,
+  message,
 }: FloatingActionsProps) {
+  // Use environment variable with fallback
+  const whatsappNumber = phoneNumber || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
+  
+  // Default message if not provided
+  const whatsappMessage = message || "Hi SSE, I am looking for assistance.";
+
   // Generate WhatsApp deep link
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <div className="fixed bottom-20 right-4 z-40 md:hidden">
