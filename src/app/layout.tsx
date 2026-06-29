@@ -11,9 +11,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SSE | Super Sedan Exclusive - Premium Used Sedans",
+  title: "SSE - Super Sedan Exclusive | Premium Used Sedans in South India",
   description:
-    "South India's premier online platform for buying, selling, and evaluating used luxury and executive sedans. Get accurate market appraisals instantly.",
+    "Buy, sell, and evaluate premium pre-owned sedans. Transparent market appraisals, flood-free guarantees, and expert brokerage at ssecars.in.",
+  openGraph: {
+    title: "SSE - Super Sedan Exclusive",
+    url: "https://ssecars.in",
+    siteName: "SSE Cars",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
