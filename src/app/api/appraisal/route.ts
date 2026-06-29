@@ -1,16 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@/generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { Resend } from "resend";
-import path from "path";
 
 // Initialize Resend for email
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Initialize SQLite adapter with database path
-const dbPath = path.join(process.cwd(), "prisma", "dev.db");
-const adapter = new PrismaBetterSqlite3({ url: dbPath });
-const prisma = new PrismaClient({ adapter });
 
 interface AppraisalRequestBody {
   make: string;
@@ -85,21 +77,6 @@ export async function POST(request: NextRequest) {
     // Generate price range
     const priceRange = generatePriceRange(body.year);
 
-    // Create lead in database
-    const lead = await prisma.appraisalLead.create({
-      data: {
-        make: body.make,
-        model: body.model,
-        year: body.year,
-        kilometers: body.kilometers,
-        rto: body.rto,
-        owners: body.owners,
-        phoneNumber: body.phoneNumber,
-        email: body.email,
-        priceRange: priceRange,
-      },
-    });
-
     // Send email notification via Resend (non-blocking)
     try {
       await resend.emails.send({
@@ -128,7 +105,6 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         priceRange: priceRange,
-        leadId: lead.id,
       },
       { status: 200 }
     );
@@ -138,7 +114,5 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
