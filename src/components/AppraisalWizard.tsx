@@ -13,6 +13,12 @@ interface VehicleData {
   email: string;
 }
 
+interface ApiResponse {
+  success: boolean;
+  priceRange: string;
+  leadId: string;
+}
+
 const vehicleMakes = [
   { value: "", label: "Select Make" },
   { value: "honda", label: "Honda" },
@@ -129,6 +135,9 @@ export default function AppraisalWizard() {
   });
   const [analysisMessageIndex, setAnalysisMessageIndex] = useState(0);
   const [errors, setErrors] = useState<Partial<VehicleData>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [priceRange, setPriceRange] = useState<{ min: string; max: string } | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const updateVehicleData = (field: keyof VehicleData, value: string) => {
     setVehicleData((prev) => ({ ...prev, [field]: value }));
@@ -190,9 +199,54 @@ export default function AppraisalWizard() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleShowValuation = () => {
+  const handleShowValuation = async () => {
     if (validateStep3()) {
-      setCurrentStep(4);
+      setIsLoading(true);
+      setApiError(null);
+
+      try {
+        const response = await fetch("/api/appraisal", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            make: vehicleData.make,
+            model: vehicleData.model,
+            year: vehicleData.year,
+            kilometers: vehicleData.kilometers,
+            rto: vehicleData.rtoState,
+            owners: vehicleData.owners,
+            phoneNumber: vehicleData.mobile,
+            email: vehicleData.email,
+          }),
+        });
+
+        const data: ApiResponse = await response.json();
+
+        if (data.success && data.priceRange) {
+          // Parse the price range string (e.g., "₹6.50 Lakhs - ₹7.10 Lakhs")
+          const parts = data.priceRange.split(" - ");
+          if (parts.length === 2) {
+            setPriceRange({
+              min: parts[0].trim(),
+              max: parts[1].trim(),
+            });
+          } else {
+            setPriceRange({
+              min: data.priceRange,
+              max: data.priceRange,
+            });
+          }
+          setCurrentStep(4);
+        } else {
+          setApiError("Failed to get valuation. Please try again.");
+        }
+      } catch {
+        setApiError("Network error. Please check your connection and try again.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -458,6 +512,7 @@ export default function AppraisalWizard() {
             onChange={(e) => updateVehicleData("mobile", e.target.value)}
             className={inputClasses}
             maxLength={10}
+            disabled={isLoading}
           />
           {errors.mobile && <p className={errorClasses}>{errors.mobile}</p>}
         </div>
@@ -473,23 +528,53 @@ export default function AppraisalWizard() {
             value={vehicleData.email}
             onChange={(e) => updateVehicleData("email", e.target.value)}
             className={inputClasses}
+            disabled={isLoading}
           />
           {errors.email && <p className={errorClasses}>{errors.email}</p>}
         </div>
 
+        {apiError && (
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+            {apiError}
+          </div>
+        )}
+
         <button
           type="button"
           onClick={handleShowValuation}
-          className="w-full btn-primary py-4 text-base font-semibold mt-8"
+          disabled={isLoading}
+          className="w-full btn-primary py-4 text-base font-semibold mt-8 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Show My Valuation
+          {isLoading ? (
+            <>
+              <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              Getting Your Valuation...
+            </>
+          ) : (
+            "Show My Valuation"
+          )}
         </button>
       </div>
     </div>
   );
 
   const renderStep4 = () => {
-    const valuation = calculateValuation();
+    // Use API price range if available, otherwise fallback to local calculation
+    const displayPrice = priceRange || calculateValuation();
     return (
       <div className="text-center">
         <div className="mb-8">
@@ -524,7 +609,7 @@ export default function AppraisalWizard() {
                 Min Value
               </p>
               <p className="text-2xl font-bold text-accentGold">
-                {valuation.min}
+                {displayPrice.min}
               </p>
             </div>
             <div className="w-px h-12 bg-borderMuted"></div>
@@ -533,7 +618,7 @@ export default function AppraisalWizard() {
                 Max Value
               </p>
               <p className="text-2xl font-bold text-accentGold">
-                {valuation.max}
+                {displayPrice.max}
               </p>
             </div>
           </div>
