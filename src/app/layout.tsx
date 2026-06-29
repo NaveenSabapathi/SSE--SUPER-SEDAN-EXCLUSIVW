@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Inter } from "next/font/google";
+import BottomNav from "@/components/BottomNav";
+import FloatingActions from "@/components/FloatingActions";
 import "./globals.css";
 
 const inter = Inter({
@@ -65,10 +67,17 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="flex-grow">{children}</main>
+        {/* Main content with bottom padding for mobile nav */}
+        <main className="flex-grow pb-20 md:pb-0">{children}</main>
 
-        {/* Minimalist Footer */}
-        <footer className="border-t border-borderMuted bg-background py-6 text-center text-xs text-textMuted">
+        {/* Mobile Bottom Navigation */}
+        <BottomNav />
+
+        {/* Floating WhatsApp Button (Mobile only) */}
+        <FloatingActions />
+
+        {/* Minimalist Footer - hidden on mobile when bottom nav is visible */}
+        <footer className="border-t border-borderMuted bg-background py-6 text-center text-xs text-textMuted md:block hidden">
           <p>
             © {new Date().getFullYear()} Super Sedan Exclusive. All Rights
             Reserved. Built for South India.

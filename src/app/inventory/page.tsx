@@ -16,7 +16,7 @@ const filters = {
 
 export default function InventoryPage() {
   return (
-    <div className="py-8 sm:py-12">
+    <div className="py-8 sm:py-12 pb-24 md:pb-0">
       <div className="max-w-7xl mx-auto px-4">
         {/* Page Header */}
         <div className="mb-8">
